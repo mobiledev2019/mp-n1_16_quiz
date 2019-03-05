@@ -1,4 +1,4 @@
-package com.doanhld.quiz;
+package com.doanhld.quiz.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,7 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+
+import com.doanhld.quiz.R;
 
 public class LoginActivity extends AppCompatActivity {
     EditText editEmail, editPassword;

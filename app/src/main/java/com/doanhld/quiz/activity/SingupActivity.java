@@ -1,4 +1,4 @@
-package com.doanhld.quiz;
+package com.doanhld.quiz.activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,22 +7,24 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.doanhld.quiz.R;
+
 public class SingupActivity extends AppCompatActivity {
-    Button btnSingup,btnLoginRedirect;
-    EditText edtUser,edtEmail,edtPassword,edtRePassword;
+    Button btnSingup, btnLoginRedirect;
+    EditText edtUser, edtEmail, edtPassword, edtRePassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_singup);
         btnSingup = findViewById(R.id.btn_signup);
-        btnLoginRedirect  = findViewById(R.id.link_login);
+        btnLoginRedirect = findViewById(R.id.link_login);
         edtUser = findViewById(R.id.input_name);
         edtEmail = findViewById(R.id.input_email);
         edtPassword = findViewById(R.id.input_password);
         edtRePassword = findViewById(R.id.input_reEnterPassword);
         checkUser();
     }
-
 
 
     private void checkUser() {
@@ -35,7 +37,7 @@ public class SingupActivity extends AppCompatActivity {
         btnLoginRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SingupActivity.this,LoginActivity.class);
+                Intent intent = new Intent(SingupActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
