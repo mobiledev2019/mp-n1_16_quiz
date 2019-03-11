@@ -5,6 +5,7 @@ import android.database.SQLException;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -145,6 +146,8 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
     private void prepareData(int id) {
 
         listData = databases.getQuestion(id);
+        Log.i("qID", id+"");
+        if (listData.size() == 0) return;
         Question q = listData.get(index);
         tvPage.setText((index + 1) + "/" + listData.size());
         int qid = q.getId();

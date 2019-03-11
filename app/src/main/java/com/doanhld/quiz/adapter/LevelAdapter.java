@@ -44,7 +44,7 @@ public class LevelAdapter extends ArrayAdapter<Level> {
         Level levelModel = levelModels.get(position);
         viewHolder.tv_topic.setText(levelModel.getTitleTopic());
         viewHolder.tvSTT.setText(String.valueOf(position+1));
-        viewHolder.ratingBar.setStepSize((float)(5/levelModel.getSl()));
+        viewHolder.ratingBar.setStepSize(levelModel.getSl () == 0 ? 0 : (float)(5/levelModel.getSl()));
         viewHolder.ratingBar.setRating(((float) levelModel.getScore()/levelModel.getSl())*5);
 
         return convertView;

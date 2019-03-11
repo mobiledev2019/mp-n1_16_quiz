@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -17,6 +18,8 @@ import com.doanhld.quiz.model.Category;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+
 import com.doanhld.quiz.adapter.CategoryAdapter;
 import com.doanhld.quiz.model.Level;
 import com.doanhld.quiz.sqlite.Databases;
@@ -75,33 +78,32 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         //
-        System.out.println(databases.getDatabaseName());
         catelogyModels = databases.getCate();
         getSupportActionBar().setTitle(catelogyModels.get(0).getTitleCatelogy());
         lvCategory = findViewById(R.id.list_item1);
         CategoryAdapter catelogyAdapter = new CategoryAdapter(this, R.layout.item_category, catelogyModels);
         lvCategory.setAdapter(catelogyAdapter);
-        lvCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toolbar.setTitle(catelogyModels.get(i).getTitleCatelogy());
-                if (i+1 != selectedLevel) {
-                    selectedCate = i+1;
-                    addLevel();
-                }
-                drawer.closeDrawers();
+        lvCategory.setOnItemClickListener((adapterView, view, i, l) -> {
+            toolbar.setTitle(catelogyModels.get(i).getTitleCatelogy());
+            if (i+1 != selectedLevel) {
+                selectedCate = i+1;
+                Log.i("id", String.valueOf(selectedCate));
+                addLevel();
             }
+            drawer.closeDrawers();
         });
     }
     private void addLevel() {
 
         levelModels = databases.getTopics(selectedCate);
+        Log.i("Arr", levelModels.toString());
         lvTopic = findViewById(R.id.list_viewTopic);
         topicAdapter = new LevelAdapter(this, R.layout.item_topic,levelModels);
         lvTopic.setAdapter(topicAdapter);
         lvTopic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (levelModels.get(i).getSl() == 0) return;
                 Intent intent = new Intent(MainActivity.this, QuestionActivity.class);
                 intent.putExtra(QuestionActivity.KEY_TITLE, String.valueOf(levelModels.get(i)));
                 intent.putExtra("ID", levelModels.get(i).getId());
