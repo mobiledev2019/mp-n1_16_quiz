@@ -33,7 +33,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
     TextView tvPage;
     TextView tvQuestion;
     RadioGroup radioGroups;
-    ArrayList<Option> optionModels;
+    ArrayList<Option> options;
     ArrayList<Result> correctA;
     int id;
     int level_score_id;
@@ -87,7 +87,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
 
 
     private void addEvent() {
-
+        //xu ly su kien cho nut Pre
         btnPre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -111,7 +111,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
                 }
             }
         });
-
+        // Xu ly su kien cho nut Next
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -152,10 +152,10 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
         tvPage.setText((index + 1) + "/" + listData.size());
         int qid = q.getId();
         tvQuestion.setText(q.getContent());
-        optionModels = databases.getOption(qid);
+        options = databases.getOption(qid);
 
-        for (int i = 0; i < optionModels.size(); i++) {
-            Option o = optionModels.get(i);
+        for (int i = 0; i < options.size(); i++) {
+            Option o = options.get(i);
             RadioButton rd = new RadioButton(QuestionActivity.this);
             rd.setId(o.getId());
             rd.setText(o.getContent());

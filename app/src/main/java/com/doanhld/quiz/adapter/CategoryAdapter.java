@@ -18,13 +18,13 @@ import java.util.List;
 public class CategoryAdapter extends ArrayAdapter<Category> {
     private Context context;
     private int resource;
-    private List<Category> catelogyModels;
+    private List<Category> categories;
 
-    public CategoryAdapter(@NonNull Context context, int resource, ArrayList<Category> catelogyModels1) {
-        super(context, resource, catelogyModels1);
+    public CategoryAdapter(@NonNull Context context, int resource, ArrayList<Category> categories) {
+        super(context, resource, categories);
         this.context = context;
         this.resource = resource;
-        this.catelogyModels = catelogyModels1;
+        this.categories = categories;
     }
 
     @NonNull
@@ -41,14 +41,14 @@ public class CategoryAdapter extends ArrayAdapter<Category> {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Category catelogyModel = catelogyModels.get(position);
+        Category catelogyModel = categories.get(position);
         viewHolder.txt_dis.setText(catelogyModel.getTitleCatelogy());
         return convertView;
     }
 
     @Override
     public int getCount() {
-        return null != catelogyModels ? catelogyModels.size() : 0;
+        return null != categories ? categories.size() : 0;
     }
 
     public class ViewHolder {

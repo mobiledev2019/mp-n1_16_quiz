@@ -18,13 +18,13 @@ import java.util.ArrayList;
 public class LevelAdapter extends ArrayAdapter<Level> {
     private Context context;
     private int resource;
-    private ArrayList<Level> levelModels;
+    private ArrayList<Level> levels;
 
-    public LevelAdapter(@NonNull Context context, int resource, ArrayList<Level> levelModels1) {
-        super(context, resource,levelModels1);
+    public LevelAdapter(@NonNull Context context, int resource, ArrayList<Level> levels) {
+        super(context, resource,levels);
         this.context = context;
         this.resource = resource;
-        this.levelModels = levelModels1;
+        this.levels = levels;
     }
 
     @NonNull
@@ -41,7 +41,7 @@ public class LevelAdapter extends ArrayAdapter<Level> {
         }else {
             viewHolder =(ViewHolder) convertView.getTag();
         }
-        Level levelModel = levelModels.get(position);
+        Level levelModel = levels.get(position);
         viewHolder.tv_topic.setText(levelModel.getTitleTopic());
         viewHolder.tvSTT.setText(String.valueOf(position+1));
         viewHolder.ratingBar.setStepSize(levelModel.getSl () == 0 ? 0 : (float)(5/levelModel.getSl()));

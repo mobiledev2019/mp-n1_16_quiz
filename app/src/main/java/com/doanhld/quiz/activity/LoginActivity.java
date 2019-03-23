@@ -6,24 +6,39 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
 
 import com.doanhld.quiz.R;
+import com.doanhld.quiz.model.ResObj;
+import com.doanhld.quiz.remote.ApiUtils;
+import com.doanhld.quiz.remote.UserService;
+
+
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
-    EditText editEmail, editPassword;
-    Button btnLogin, btnSingupRedirect;
+    private EditText inputUserName, inputPassword;
+    private Button btnLogin, btnSingupRedirect;
+    UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        editEmail = findViewById(R.id.input_email);
-        editPassword = findViewById(R.id.input_password);
+
+
+        inputUserName = findViewById(R.id.input_username);
+        inputPassword = findViewById(R.id.input_passwordsing);
 
         btnLogin = findViewById(R.id.btn_login);
         btnSingupRedirect = findViewById(R.id.link_signup);
+        userService = ApiUtils.getUserService();
         checkLogin();
-        validate();
+//        validate();
     }
 
     private void checkLogin() {
@@ -32,66 +47,64 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                if (editEmail.getText().length() !=0 && editPassword.getText().length() !=0){
-//                    if (editEmail.getText().toString().equals("abc@gmail.com") && editPassword.getText().toString().equals("12345")){
-//                        Toast.makeText(LoginActivity.this,"Login Success",Toast.LENGTH_LONG).show();
-//                        Intent intent = new Intent(LoginActivity.this,MainActivity.class);
-//                        startActivity(intent);
-//                    }else {
-//                        Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//                else {
-//                    Toast.makeText(LoginActivity.this,"Nhap du thong tin",Toast.LENGTH_LONG).show();
-//                }
-                login();
+
+                String username = inputUserName.getText().toString();
+                String password = inputPassword.getText().toString();
+
+                if (validateLogin(username, password)) {
+                    doLogin(username, password);
+                }
+
             }
         });
         btnSingupRedirect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LoginActivity.this, SingupActivity.class);
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
                 startActivity(intent);
             }
         });
     }
 
-    public void login() {
-        if (!validate()) {
-            onLoginFailed();
-            return;
-        } else {
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
+
+    private boolean validateLogin(String username, String password) {
+        if (username == null || username.trim().length() == 0) {
+            Toast.makeText(this, "Username is required", Toast.LENGTH_SHORT).show();
+            return false;
         }
+        if (password == null || password.trim().length() == 0) {
+            Toast.makeText(this, "Password is required", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        return true;
     }
 
-    public void onLoginFailed() {
+    private void doLogin(String username, String password) {
+        Call<ResObj> call = userService.login(username, password);
+        call.enqueue(new Callback<ResObj>() {
+            @Override
+            public void onResponse(Call<ResObj> call, Response<ResObj> response) {
+                if (response.isSuccessful()) {
+                    ResObj resObj =  response.body();
+                    if (resObj.getMessage().equals("true")) {
+                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("username", username);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(LoginActivity.this, "The username or password is incorrect", Toast.LENGTH_SHORT).show();
 
-        btnLogin.setEnabled(true);
+                    }
+
+                }else {
+                    Toast.makeText(LoginActivity.this, "Error! Please try again!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResObj> call, Throwable t) {
+                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
-
-    public boolean validate() {
-        boolean valid = true;
-
-        String email = editEmail.getText().toString();
-        String password = editPassword.getText().toString();
-
-        if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editEmail.setError("enter a valid email address");
-            valid = false;
-        } else {
-            editEmail.setError(null);
-        }
-
-        if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
-            editPassword.setError("between 4 and 10 alphanumeric characters");
-            valid = false;
-        } else {
-            editPassword.setError(null);
-        }
-
-        return valid;
-    }
-
 }

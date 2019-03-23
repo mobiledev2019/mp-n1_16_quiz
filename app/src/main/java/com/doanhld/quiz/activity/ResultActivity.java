@@ -24,7 +24,7 @@ public class ResultActivity extends AppCompatActivity {
     int id;
     TextView tvImage;
     ImageButton imResult;
-    ArrayList<Result> resultModels;
+    ArrayList<Result> results;
     Databases databases;
     HashMap<Integer, String> map;
     int score=0;
@@ -41,17 +41,17 @@ public class ResultActivity extends AppCompatActivity {
         tvImage = findViewById(R.id.tv_result);
         setUpDb();
         id = getIntent().getIntExtra("ID",0);
-        resultModels = databases.getResult(id);
+        results = databases.getResult(id);
         map = (HashMap<Integer, String>) getIntent().getSerializableExtra("KQ");
         lsd = getIntent().getIntExtra("lsd", 0);
         lvResult = findViewById(R.id.listResult);
 
-        for (int i = 0 ; i < resultModels.size(); i++) {
-            resultModels.get(i).setYourAnswer(map.get(i));
-            if (resultModels.get(i).getKQ()) score++;
+        for (int i = 0 ; i < results.size(); i++) {
+            results.get(i).setYourAnswer(map.get(i));
+            if (results.get(i).getKQ()) score++;
         }
 
-        ResultAdapter resultAdapter = new ResultAdapter(this,R.layout.item_result,resultModels);
+        ResultAdapter resultAdapter = new ResultAdapter(this,R.layout.item_result,results);
         if (lsd == 0) {
             databases.insertToDB(id,score);
         }
@@ -59,7 +59,7 @@ public class ResultActivity extends AppCompatActivity {
             int diem = getIntent().getIntExtra("score",0);
             if(score > diem) databases.updateLevelScore(lsd,id,score);
         }
-        tvImage.setText("Correct: "+score+"/"+resultModels.size());
+        tvImage.setText("Correct: "+score+"/"+results.size());
         lvResult.setAdapter(resultAdapter);
         imResult = findViewById(R.id.ig_result);
         imResult.setOnClickListener(new View.OnClickListener() {

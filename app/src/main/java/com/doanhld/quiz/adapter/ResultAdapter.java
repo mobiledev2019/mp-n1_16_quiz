@@ -17,12 +17,12 @@ import java.util.ArrayList;
 public class ResultAdapter extends ArrayAdapter<Result> {
     private Context context;
     private int resource;
-    private ArrayList<Result> resultModels;
-    public ResultAdapter(@NonNull Context context, int resource, ArrayList<Result> resultModels1) {
-        super(context, resource,resultModels1);
+    private ArrayList<Result> results;
+    public ResultAdapter(@NonNull Context context, int resource, ArrayList<Result> results) {
+        super(context, resource,results);
         this.context = context;
         this.resource = resource;
-        this.resultModels = resultModels1;
+        this.results = results;
     }
 
     @NonNull
@@ -39,7 +39,7 @@ public class ResultAdapter extends ArrayAdapter<Result> {
         }else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        Result resultModel = resultModels.get(position);
+        Result resultModel = results.get(position);
         viewHolder.tvResult1.setText(resultModel.getQuestion());
         if(resultModel.getKQ()){
             viewHolder.tvResult2.setText("");

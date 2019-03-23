@@ -70,13 +70,7 @@ public class Level {
 
     @Override
     public String toString() {
-        return "Level{" +
-                "titleTopic='" + titleTopic + '\'' +
-                ", id=" + id +
-                ", id_categories=" + id_categories +
-                ", score=" + score +
-                ", sl=" + sl +
-                ", levelscore_id=" + levelscore_id +
-                '}';
+        return  titleTopic  ;
+
     }
 }

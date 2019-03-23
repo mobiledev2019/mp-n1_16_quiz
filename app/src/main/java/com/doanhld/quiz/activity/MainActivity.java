@@ -19,6 +19,7 @@ import com.doanhld.quiz.model.Category;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import com.doanhld.quiz.adapter.CategoryAdapter;
 import com.doanhld.quiz.model.Level;
@@ -28,11 +29,11 @@ public class MainActivity extends AppCompatActivity {
 
     ListView lvCategory;
     ListView lvTopic;
-    ArrayList<Category> catelogyModels;
-    ArrayList<Level> levelModels = new ArrayList<>();
+    ArrayList<Category> categories;
+    ArrayList<Level> levels = new ArrayList<>();
     Databases databases;
     int selectedLevel = 1;
-    LevelAdapter topicAdapter;
+    LevelAdapter levelAdapter;
     int selectedCate = 1 ;
 
     @Override
@@ -56,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             throw new Error("Unable to create database");
 
         }
-
         try {
 
             databases.openDataBase();
@@ -78,13 +78,13 @@ public class MainActivity extends AppCompatActivity {
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         //
-        catelogyModels = databases.getCate();
-        getSupportActionBar().setTitle(catelogyModels.get(0).getTitleCatelogy());
+        categories = databases.getCate();
+        getSupportActionBar().setTitle(categories.get(0).getTitleCatelogy());
         lvCategory = findViewById(R.id.list_item1);
-        CategoryAdapter catelogyAdapter = new CategoryAdapter(this, R.layout.item_category, catelogyModels);
+        CategoryAdapter catelogyAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
         lvCategory.setAdapter(catelogyAdapter);
         lvCategory.setOnItemClickListener((adapterView, view, i, l) -> {
-            toolbar.setTitle(catelogyModels.get(i).getTitleCatelogy());
+            toolbar.setTitle(categories.get(i).getTitleCatelogy());
             if (i+1 != selectedLevel) {
                 selectedCate = i+1;
                 Log.i("id", String.valueOf(selectedCate));
@@ -95,20 +95,19 @@ public class MainActivity extends AppCompatActivity {
     }
     private void addLevel() {
 
-        levelModels = databases.getTopics(selectedCate);
-        Log.i("Arr", levelModels.toString());
+        levels = databases.getTopics(selectedCate);
         lvTopic = findViewById(R.id.list_viewTopic);
-        topicAdapter = new LevelAdapter(this, R.layout.item_topic,levelModels);
-        lvTopic.setAdapter(topicAdapter);
+        levelAdapter = new LevelAdapter(this, R.layout.item_topic,levels);
+        lvTopic.setAdapter(levelAdapter);
         lvTopic.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (levelModels.get(i).getSl() == 0) return;
+                if (levels.get(i).getSl() == 0) return;
                 Intent intent = new Intent(MainActivity.this, QuestionActivity.class);
-                intent.putExtra(QuestionActivity.KEY_TITLE, String.valueOf(levelModels.get(i)));
-                intent.putExtra("ID", levelModels.get(i).getId());
-                intent.putExtra("level_score_id", levelModels.get(i).getLevelscore_id());
-                intent.putExtra("score",levelModels.get(i).getScore());
+                intent.putExtra(QuestionActivity.KEY_TITLE, String.valueOf(levels.get(i)));
+                intent.putExtra("ID", levels.get(i).getId());
+                intent.putExtra("level_score_id", levels.get(i).getLevelscore_id());
+                intent.putExtra("score",levels.get(i).getScore());
                 selectedLevel = i;
                 startActivityForResult(intent,0);
             }
@@ -121,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 0) {
             if (resultCode == RESULT_OK) {
                 int d = data.getIntExtra("score", 0);
-                if (d > levelModels.get(selectedLevel).getScore()) {
-                    levelModels.get(selectedLevel).setScore(d);
-                    topicAdapter.notifyDataSetChanged();
+                if (d > levels.get(selectedLevel).getScore()) {
+                    levels.get(selectedLevel).setScore(d);
+                    levelAdapter.notifyDataSetChanged();
                 }
             }
         }
