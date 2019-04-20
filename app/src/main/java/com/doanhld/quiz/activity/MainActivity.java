@@ -69,14 +69,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addCatelogy() {
-        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
+//        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.addDrawerListener(toggle);
-        toggle.syncState();
+//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+//        drawer.addDrawerListener(toggle);
+//        toggle.syncState();
         //
         categories = databases.getCate();
         getSupportActionBar().setTitle(categories.get(0).getTitleCatelogy());
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("id", String.valueOf(selectedCate));
                 addLevel();
             }
-            drawer.closeDrawers();
+//            drawer.closeDrawers();
         });
     }
     private void addLevel() {

@@ -30,6 +30,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
     final public static String KEY_TITLE = "TitleQuestionActivity";
     Button btnNext;
     Button btnPre;
+    Button btnFinish;
     TextView tvPage;
     TextView tvQuestion;
     RadioGroup radioGroups;
@@ -58,6 +59,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
         correctA = new ArrayList<>();
         btnNext = findViewById(R.id.btnNext);
         btnPre = findViewById(R.id.btnPrevious);
+        btnFinish = findViewById(R.id.button_finish);
         tvPage = findViewById(R.id.txtPage);
         tvQuestion = findViewById(R.id.txtQuestion);
         btnPre.setEnabled(false);
@@ -140,6 +142,27 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
                 }
             }
 
+        });
+        btnFinish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(QuestionActivity.this, ResultActivity.class);
+                intent.putExtra("ID", id);
+                intent.putExtra("KQ", map);
+                intent.putExtra("lsd", level_score_id);
+                intent.putExtra("score", getIntent().getIntExtra("score", 0));
+                Intent kqIntent = new Intent();
+                for (int i = 0; i < correctA.size(); i++) {
+                    if (correctA.get(i).getCorrectAnswer().equals(map.get(i))) score++;
+                }
+                kqIntent.putExtra("score", score);
+                setResult(RESULT_OK, kqIntent);
+
+                finish();
+                startActivity(intent);
+
+
+            }
         });
     }
 
