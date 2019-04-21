@@ -70,8 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void addCatelogy() {
 //        final DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        final Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+//        final Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
         //
 //        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
 //                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
         CategoryAdapter catelogyAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
         lvCategory.setAdapter(catelogyAdapter);
         lvCategory.setOnItemClickListener((adapterView, view, i, l) -> {
-            toolbar.setTitle(categories.get(i).getTitleCatelogy());
+//            toolbar.setTitle(categories.get(i).getTitleCatelogy());
             if (i+1 != selectedLevel) {
                 selectedCate = i+1;
                 Log.i("id", String.valueOf(selectedCate));

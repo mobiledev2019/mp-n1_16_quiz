@@ -7,6 +7,7 @@ import android.support.v7.widget.CardView;
 import android.view.View;
 
 import com.doanhld.quiz.R;
+import com.doanhld.quiz.adapter.CategoryAdapter;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -18,7 +19,7 @@ public class HomeActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent playIntent = new Intent(HomeActivity.this, MainActivity.class);
+                Intent playIntent = new Intent(HomeActivity.this, CategoryActivity.class);
                 startActivity(playIntent);
             }
         });

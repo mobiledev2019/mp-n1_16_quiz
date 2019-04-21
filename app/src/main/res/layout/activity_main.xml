@@ -2,31 +2,18 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    android:orientation="horizontal">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    android:orientation="vertical"
+    tools:context="com.doanhld.quiz.activity.MainActivity"
+    tools:showIn="@layout/app_bar_main">
 
-    <include
-        layout="@layout/app_bar_main"
+    <ListView
+        android:id="@+id/list_item1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
 
-
-
-        <ListView
-            android:dividerHeight="0dp"
-            android:divider="@null"
-            android:layout_marginTop="80dp"
-            android:id="@+id/list_item1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </ListView>
-
-
-
+    </ListView>
 </LinearLayout>
 
