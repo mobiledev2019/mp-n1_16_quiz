@@ -87,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ResObj resObj =  response.body();
                     if (resObj.getMessage().equals("true")) {
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                         intent.putExtra("username", username);
                         startActivity(intent);
                     } else {

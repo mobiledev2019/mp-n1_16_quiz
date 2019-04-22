@@ -2,13 +2,16 @@ package com.doanhld.quiz.activity;
 
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.doanhld.quiz.R;
 import com.doanhld.quiz.adapter.CategoryAdapter;
@@ -31,11 +34,13 @@ public class CategoryActivity extends AppCompatActivity {
     CategoryAdapter categoryAdapter;
     LevelAdapter levelAdapter;
     int selectedCate = 1 ;
+    TextView txtCate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_category);
+        setContentView(R.layout.activity_main);
         databases = new Databases(this);
+        txtCate = findViewById(R.id.txt_dis1);
         setUpDb();
         addCatelogy();
         addLevel();
@@ -67,22 +72,28 @@ public class CategoryActivity extends AppCompatActivity {
         categories = databases.getCate();
 //        getSupportActionBar().setTitle(categories.get(0).getTitleCatelogy());
         lvCategory = findViewById(R.id.list_item1);
-        categoryAdapter = new CategoryAdapter(this, R.layout.item_category, categories);
+        categoryAdapter = new CategoryAdapter(this, R.layout.activity_category, categories);
         lvCategory.setAdapter(categoryAdapter);
         lvCategory.setOnItemClickListener((adapterView, view, i, l) -> {
 //            toolbar.setTitle(categories.get(i).getTitleCatelogy());
             if (i+1 != selectedLevel) {
                 selectedCate = i+1;
-                Log.i("id", String.valueOf(selectedCate));
-                addLevel();
+//                Log.i("id", String.valueOf(selectedCate));
+//                addLevel();
             }
 //            drawer.closeDrawers();
         });
+//        txtCate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
     private void addLevel() {
 
         levels = databases.getTopics(selectedCate);
-        lvTopic = findViewById(R.id.list_viewTopic);
+        lvTopic = findViewById(R.id.list_item1);
         levelAdapter = new LevelAdapter(this, R.layout.item_topic,levels);
         lvTopic.setAdapter(levelAdapter);
         lvTopic.setOnItemClickListener(new AdapterView.OnItemClickListener() {

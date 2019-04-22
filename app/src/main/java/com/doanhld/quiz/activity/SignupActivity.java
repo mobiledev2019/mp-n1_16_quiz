@@ -72,7 +72,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<Account> call, Response<Account> response) {
                 if (response.isSuccessful()) {
-                    Intent intent = new Intent(SignupActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SignupActivity.this, HomeActivity.class);
                     startActivity(intent);
                 }
             }
