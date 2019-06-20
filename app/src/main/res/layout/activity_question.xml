@@ -58,13 +58,33 @@
 
     <RadioGroup
         android:id="@+id/groupChoice"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:orientation="vertical"
         android:padding="10dp">
 
     </RadioGroup>
+
+    <HorizontalScrollView
+        android:fillViewport="true"
+
+        android:padding="8dp"
+        android:id="@+id/hsv_anserDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+        <LinearLayout
+            android:padding="16dp"
+            android:id="@+id/ll_answerDetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
     <LinearLayout
 

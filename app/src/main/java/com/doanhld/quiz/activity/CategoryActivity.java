@@ -9,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 public class CategoryActivity extends AppCompatActivity {
 
     ListView lvCategory;
+    GridView gridView;
     ListView lvTopic;
     ArrayList<Category> categories;
     ArrayList<Level> levels = new ArrayList<>();
@@ -39,6 +41,7 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        setContentView(R.layout.gird);
         databases = new Databases(this);
         txtCate = findViewById(R.id.txt_dis1);
         setUpDb();
@@ -72,7 +75,12 @@ public class CategoryActivity extends AppCompatActivity {
         categories = databases.getCate();
 //        getSupportActionBar().setTitle(categories.get(0).getTitleCatelogy());
         lvCategory = findViewById(R.id.list_item1);
+        gridView = (GridView) findViewById(R.id.gv_category);
+
         categoryAdapter = new CategoryAdapter(this, R.layout.activity_category, categories);
+//        categoryAdapter = new CategoryAdapter(this,  R.layout.activity_category, categories);
+//        gridView.setAdapter(categoryAdapter);
+//        gridView.setOnItemClickListener((adapterView, view, i, l) -> {
         lvCategory.setAdapter(categoryAdapter);
         lvCategory.setOnItemClickListener((adapterView, view, i, l) -> {
 //            toolbar.setTitle(categories.get(i).getTitleCatelogy());

@@ -1,16 +1,22 @@
 package com.doanhld.quiz.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.SQLException;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.HorizontalScrollView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.doanhld.quiz.R;
@@ -27,6 +33,9 @@ import java.util.List;
 
 public class QuestionActivity extends AppCompatActivity implements EnglishDialog.EnglishDialogListener{
 
+    Button button;
+    LinearLayout linearLayout;
+    HorizontalScrollView horizontalScrollView;
     final public static String KEY_TITLE = "TitleQuestionActivity";
     Button btnNext;
     Button btnPre;
@@ -51,6 +60,10 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        linearLayout = (LinearLayout) findViewById(R.id.ll_answerDetail);
+        horizontalScrollView = (HorizontalScrollView) findViewById(R.id.hsv_anserDetail);
+
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -66,8 +79,9 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
         radioGroups = findViewById(R.id.groupChoice);
         radioGroups.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                RadioButton rd = findViewById(radioGroup.getCheckedRadioButtonId());
+            public void onCheckedChanged(RadioGroup radioGroup, int ii) {
+//                RadioButton rd = findViewById(radioGroup.getCheckedRadioButtonId());
+                RadioButton rd = radioGroup.findViewById(ii);
                 if (rd != null) {
                     map.put(index, rd.getText().toString());
                 }
@@ -85,6 +99,47 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
         englishDialog = new EnglishDialog();
         englishDialog.setCancelable(false);
         englishDialog.setEnglishDialogListener(this);
+
+        for( int i = 0; i <listData.size(); i++ )
+        {
+            Button button = new Button(linearLayout.getContext());
+//            String buttonID = "btn_answer_" + i;
+            button.setId(i);
+            button.setText("Question "+(i+1));
+            button.setBackgroundColor(Color.RED);
+            button.setPadding(8,0,8,0);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    radioGroups.removeAllViews();
+                    index = v.getId();
+                    tvPage.setText((index + 1) + "/" + listData.size());
+                    Question q = listData.get(index);
+                    tvQuestion.setText(q.getContent());
+                    int qid = q.getId();
+                    ArrayList<Option> optionModels = databases.getOption(qid);
+                    for (int j = 0; j < optionModels.size(); j++) {
+                        Option o = optionModels.get(j);
+                        RadioButton rd = new RadioButton(QuestionActivity.this);
+                        rd.setId(o.getId());
+                        rd.setText(o.getContent());
+                        if (o.getContent().equals(map.get(index))) rd.setChecked(true);
+                        radioGroups.addView(rd);
+                    }
+                    if (index == 0) {
+                        btnPre.setEnabled(false);
+                    } else btnPre.setEnabled(true);
+                    for (int i : map.keySet()){
+                        Button btn = (Button) linearLayout.findViewById(i);
+                        btn.setBackgroundColor(Color.GREEN);
+
+                    }
+                }
+            });
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,    ViewGroup.LayoutParams.WRAP_CONTENT);
+            params.setMargins(8,8,8,8);
+            linearLayout.addView(button, params);
+        }
     }
 
 
@@ -110,6 +165,11 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
                 }
                 if (index == 0) {
                     btnPre.setEnabled(false);
+                } else btnPre.setEnabled(true);
+                for (int i : map.keySet()){
+
+                    button = (Button) linearLayout.findViewById(i);
+                    button.setBackgroundColor(Color.GREEN);
                 }
             }
         });
@@ -121,6 +181,7 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
                     englishDialog.show(getSupportFragmentManager(), "TEST");
 
                 } else {
+
                     radioGroups.removeAllViews();
                     index++;
                     tvPage.setText((index + 1) + "/" + listData.size());
@@ -140,6 +201,16 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
                 if (index != 0) {
                     btnPre.setEnabled(true);
                 }
+                for (int i : map.keySet()){
+
+                    button = (Button) linearLayout.findViewById(i);
+                    button.setBackgroundColor(Color.GREEN);
+
+                }
+
+
+
+
             }
 
         });

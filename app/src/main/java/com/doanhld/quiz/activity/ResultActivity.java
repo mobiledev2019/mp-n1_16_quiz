@@ -91,4 +91,7 @@ public class ResultActivity extends AppCompatActivity {
 
         }
     }
+    public void showAnswerDetail(View view){
+        lvResult.setVisibility(View.VISIBLE);
+    }
 }
