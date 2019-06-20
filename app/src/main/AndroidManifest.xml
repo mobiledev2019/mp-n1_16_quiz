@@ -14,7 +14,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.CategoryActivity"></activity>
+        <service
+            android:name=".NService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activity.NotifActivity" />
+        <activity android:name=".activity.CategoryActivity" />
         <activity android:name=".activity.HomeActivity">
             <!--<intent-filter>-->
                 <!--<action android:name="android.intent.action.MAIN" />-->
@@ -26,22 +32,26 @@
             android:name=".activity.QuestionActivity"
             android:noHistory="true"
             android:theme="@style/AppTheme.NoActionBar" />
-
-
         <activity
             android:name=".activity.ResultActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.SignupActivity"></activity>
-        <activity android:name=".activity.LoginActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        <activity android:name=".activity.SignupActivity" />
+        <activity android:name=".activity.LoginActivity">
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+             <intent-filter>
+             <action android:name="android.intent.action.MAIN" />
+
+
+             <category android:name="android.intent.category.LAUNCHER" />
+             </intent-filter>
         </activity>
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <!--<service-->
+            <!--android:name=".NService"-->
+            <!--android:enabled="true" />-->
     </application>
 
 </manifest>

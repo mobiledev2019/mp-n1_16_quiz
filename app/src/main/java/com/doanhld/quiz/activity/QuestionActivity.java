@@ -139,7 +139,6 @@ public class QuestionActivity extends AppCompatActivity implements EnglishDialog
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,    ViewGroup.LayoutParams.WRAP_CONTENT);
             params.setMargins(8,8,8,8);
             linearLayout.addView(button, params);
-
         }
     }
 
